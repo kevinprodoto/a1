@@ -1,14 +1,16 @@
 import React from "react";
 
-import AppHeader from "../AppHeader";
+import AppHeader from "../AppHeader/index";
 
-import ItemsList from "../ItemsList"
+import ItemsList from "../ItemsList/index"
 
-export const App = () => {
+const App = () => {
     return (
-        <section>
+        <section className = "a1app">
             <AppHeader />
             <ItemsList />
         </section>
     )
 }
+
+export default App;

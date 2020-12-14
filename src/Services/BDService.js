@@ -1,4 +1,4 @@
-export const createBD = () => {
+export const createBD = (obj) => {
     let openRequest = indexedDB.open("store", 1);
     
     openRequest.onupgradeneeded = function() {
@@ -18,6 +18,10 @@ export const createBD = () => {
     
     openRequest.onsuccess = function() {
         let db = openRequest.result;
+        let transaction = db.transaction("books", "readwrite");
+        let books = transaction.objectStore("books");
+        
+
         // продолжить работу с базой данных, используя объект db
     };
 }
