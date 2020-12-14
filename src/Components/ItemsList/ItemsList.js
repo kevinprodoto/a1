@@ -1,24 +1,38 @@
 import React from "react";
 
-import Item from "../Item/index"
+import Item from "../Item/index";
 
-import {obj} from "../../1";
+import {format} from "date-fns";
 
-const ItemsList = () => {
-    const items = obj.payload.items;
-    return <ul className ="itemList">
-        {items.map(item => {
-            return <Item 
-                key = {item.id}
-                ticker = {item.ticker}
-                status = {item.status}
-                payment = {item.payment}
-                currency = {item.currency}
-                showName = {item.showName}
-            />
-        })}
-    </ul>
-
+const ItemsList = ({items}) => {
+    console.log(items);
+    return (
+        <main className = "main">
+            <ul className ="itemList">
+                <li className = "item">
+                    <div className = "date">Дата операции</div>
+                    <div className = "operationType">Тип операции</div>
+                    <div className = "showName">Объект операции</div>
+                    <div className = "ticker">Тикер объекта</div>
+                    <div className = "payment">Пэймент</div>
+                    <div className = "currency">Валюта</div>
+                    <div className = "status">Статус операции</div>
+                </li>
+                {items.map(item => {
+                    return <Item 
+                        type = {item.operationType}
+                        date = {format(new Date(item.date), "PPp")}
+                        key = {item.id}
+                        ticker = {item.ticker}
+                        status = {item.status}
+                        payment = {item.payment}
+                        currency = {item.currency}
+                        showName = {item.showName}
+                    />
+                })}
+            </ul>
+        </main>
+    )
 }
 
 export default ItemsList;
