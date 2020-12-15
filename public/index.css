@@ -1,23 +1,83 @@
 body {
 	margin: 0;
 	padding: 0;
+
+	background-color: #AFEEEE;
+}
+
+.appHeader {
+	background-color: #AFEEEE;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.search {
+	line-height: 40px;
+	background-color: #AFEEEE;
+	border: none;
+	border-bottom: 2px solid blue;
+	outline: none;
+}
+.filters button {
+	line-height: 40px;
+	background-color: #AFEEEE;
+	border: none;
+	outline: none;
+}
+.main {
+	background-color: #AFEEEE;
+}
+.inputs {
+	display: flex;
+}
+.inputs form, .inputs p {
+	margin-left: 10px;
+	line-height: 40px;
+}
+.resultsTable {
+	margin: auto;
+	width: 800px;
+	background-color: #66CDAA;
+}
+.resultsTable__block {
+	display: flex;
+}
+.resultsTable__block p {
+	width: 400px;
+	border-bottom: 1px solid gray;
 }
 .itemList {
+	background-color: #ADD8E6;
 	margin: auto;
 	padding: 0; 
 	width: 1100px;
 	border: 1px solid black;
 }
 .item {
+	line-height: 40px;
 	display: flex;
 	border-bottom: 1px solid black;
 }
 .status, .ticker, .currency, .payment, .operationType {
-	width: 10%;
+	width: 15%;
 }
 .showName {
 	width: 20%;
 }
 .date {
-	width: 30%;
+	padding-left: 15px;
+	width: 25%;
+}
+.active {
+	border: 1px solid black !important;
+}
+.text {
+	margin: 0;
+}
+.textGreen {
+	color: green;
+}
+.textRed {
+	color: red;
 }

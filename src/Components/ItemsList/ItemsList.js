@@ -4,9 +4,37 @@ import Item from "../Item/index";
 
 import {format} from "date-fns";
 
-const ItemsList = ({items}) => {
+import {comission} from "../../Tools/comission";
+
+import {profit} from "../../Tools/profit";
+
+import {pureProfit} from "../../Tools/pureProfit";
+
+import {howMuchDays} from "../../Tools/howMuchDays";
+
+import {profitByDay} from "../../Tools/profitByDay";
+
+const ItemsList = ({items, dateTo, dateFrom}) => {
     return (
         <main className = "main">
+            <div className = "resultsTable">
+                <div className = "resultsTable__block">
+                    <p>{`Чистая Прибыль: ${profit(items)}`}</p>
+                    <p>{`Всего сделок: ${items.length}`}</p>
+                </div>
+                <div className = "resultsTable__block">
+                    <p>{`Прибыль в день: ${profitByDay(profit(items), howMuchDays(dateFrom, dateTo))}`}</p>
+                    <p>{`Торговых дней: ${howMuchDays(dateFrom, dateTo)}`}</p>
+                </div>
+                <div className = "resultsTable__block">
+                    <p>{`Прибыль со сделок: ${pureProfit(items)}`}</p>
+                    <p>{`Комиссия за сделки: ${comission(items)}`}</p>
+                </div>
+                <div className = "resultsTable__block">
+                    <p>{`Прогнозируемый доход в год: ${profit(items) * 259}`}</p>
+                    <p>{`Доходность / риск: Lorem ipsum`}</p>
+                </div>
+            </div>
             <ul className ="itemList">
                 <li className = "item">
                     <div className = "date">Дата операции</div>
