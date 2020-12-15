@@ -36,11 +36,7 @@ export default class AppContainer extends Component {
                     sell: false,
                     buy: false,
                     brokCom: false,
-                    updetedItems: this.state.items.filter(item => {return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(this.state.label)
-                        }
-                    }}).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
+                    updetedItems: this.state.items.filter(item => this.changeLabel(item, this.state.label)).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
                 }
             })
         } else {
@@ -64,11 +60,7 @@ export default class AppContainer extends Component {
                     sell: true,
                     buy: false,
                     brokCom: false,
-                    updetedItems: this.state.items.filter(item => {return item.operationType === "Sell"}).filter(item => {return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(this.state.label)
-                        }
-                    }}).filter(item => {return changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))})
+                    updetedItems: this.state.items.filter(item => {return item.operationType === "Sell"}).filter(item => this.changeLabel(item, this.state.label)).filter(item => {return changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))})
                 }
                 })
         } else {
@@ -93,11 +85,7 @@ export default class AppContainer extends Component {
                     sell: false,
                     buy: true,
                     brokCom: false,
-                    updetedItems: this.state.items.filter(item => item.operationType === "Buy").filter(item => {return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(this.state.label)
-                        }
-                    }}).filter(item => {return changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))})
+                    updetedItems: this.state.items.filter(item => item.operationType === "Buy").filter(item => this.changeLabel(item, this.state.label)).filter(item => {return changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))})
                 }
                 })
         } else {
@@ -122,11 +110,7 @@ export default class AppContainer extends Component {
                     sell: false,
                     buy: false,
                     brokCom: true,
-                    updetedItems: this.state.items.filter(item => item.operationType === "BrokCom").filter(item => { return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(this.state.label)
-                        }
-                    }}).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
+                    updetedItems: this.state.items.filter(item => item.operationType === "BrokCom").filter(item => this.changeLabel(item, this.state.label)).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
                 }
                 })
         } else {
@@ -154,46 +138,36 @@ export default class AppContainer extends Component {
             this.setState(() => {
                 return {
                     label: evv.target.value,
-                    updetedItems: this.state.items.filter(item => { return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(evv.target.value)
-                        }
-                    }}).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
+                    updetedItems: this.state.items.filter(item => this.changeLabel(item, evv.target.value)).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
                 }
             })
         } else if (this.state.sell) {
             this.setState(() => {
                 return {
                     label: evv.target.value,
-                    updetedItems: this.state.items.filter(item => { return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(evv.target.value)
-                        }
-                    }}).filter(item => item.operationType === "Sell").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
+                    updetedItems: this.state.items.filter(item => this.changeLabel(item, evv.target.value)).filter(item => item.operationType === "Sell").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
                 }
             })
         } else if (this.state.buy) {
             this.setState(() => {
                 return {
                     label: evv.target.value,
-                    updetedItems: this.state.items.filter(item => { return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(evv.target.value)
-                        }
-                    }}).filter(item => item.operationType === "Buy").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
+                    updetedItems: this.state.items.filter(item => this.changeLabel(item, evv.target.value)).filter(item => item.operationType === "Buy").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
                 }
             })
         } else if (this.state.brokCom) {
             this.setState(() => {
                 return {
                     label: evv.target.value,
-                    updetedItems: this.state.items.filter(item => { return () => {
-                        if (item.ticker) {
-                            return item.ticker.includes(evv.target.value)
-                        }
-                    }}).filter(item => item.operationType === "BrokCom").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
+                    updetedItems: this.state.items.filter(item => this.changeLabel(item, evv.target.value)).filter(item => item.operationType === "BrokCom").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
                 }
             })
+        }
+    }
+
+    changeLabel = (item, label) => {
+        if (item.ticker) {
+            return item.ticker.includes(label)
         }
     }
 
