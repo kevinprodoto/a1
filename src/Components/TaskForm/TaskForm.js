@@ -4,7 +4,6 @@ class TaskForm extends Component{
 
     onSubmit = (evv) => {
         localStorage.setItem("req", evv.target.value);
-        console.log(localStorage.getItem("req"));
     }
 
     render() {
