@@ -5,7 +5,6 @@ import Item from "../Item/index";
 import {format} from "date-fns";
 
 const ItemsList = ({items}) => {
-    console.log(items);
     return (
         <main className = "main">
             <ul className ="itemList">

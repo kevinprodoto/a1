@@ -4,7 +4,7 @@ import AppHeader from "../AppHeader/index";
 
 import ItemsList from "../ItemsList/index";
 
-const App = ({fail, items, changeBuy, changeSell, changeComission, changeAll}) => {
+const App = ({fail, items, changeBuy, changeSell, changeComission, changeAll, onLabelChange}) => {
 
     return (
         <section className = "a1app">
@@ -14,7 +14,8 @@ const App = ({fail, items, changeBuy, changeSell, changeComission, changeAll}) =
                 changeComission = {changeComission}
                 changeBuy = {changeBuy}
                 changeSell = {changeSell}
-                changeAll = {changeAll}/>
+                changeAll = {changeAll}
+                onLabelChange = {onLabelChange}/>
             <ItemsList items = {items}/>
         </section>
     )

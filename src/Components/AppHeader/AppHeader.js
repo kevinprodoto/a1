@@ -1,6 +1,6 @@
 import React from "react";
 
-const AppHeader = ({fail, count, changeBuy, changeSell, changeComission, changeAll}) => {
+const AppHeader = ({fail, count, changeBuy, changeSell, changeComission, changeAll, onLabelChange}) => {
 
     return (
         <header>
@@ -14,7 +14,11 @@ const AppHeader = ({fail, count, changeBuy, changeSell, changeComission, changeA
                 <button type = "button" onClick = {changeBuy}>Покупки</button>
                 <button type = "button" onClick = {changeComission}>Комиссии</button>
             </div>
-
+            <div>
+                <form>
+                    <input placeholder = "Искать тут..." onChange = {onLabelChange}></input>
+                </form>
+            </div>
         </header>
     ) 
     

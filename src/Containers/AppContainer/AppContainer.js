@@ -46,18 +46,31 @@ export default class AppContainer extends Component {
         })
     }
 
-    updateItems = (newItems) => {
-
-        this.setState(() => {
-            return {
-                updatedItems: newItems
-            }
-        })
+    onLabelChange = (evv) => {
+        if (evv.target.value === "") {
+            this.setState(() => {
+                return {
+                    updetedItems: this.state.items,
+                }
+            })
+        } else {
+            console.log(evv.target.value);
+            this.setState(() => {
+                return {
+                    updetedItems: this.state.items.filter(item => {
+                        if (item.ticker) {
+                            return item.ticker.includes(evv.target.value)
+                        }
+                    })
+                }
+            })
+        }
     }
 
     render() {
         const {fla, updetedItems} = this.state;
         return <App 
+                    onLabelChange = {this.onLabelChange}
                     fail = {fla}
                     items = {updetedItems}
                     changeComission = {this.changeComission}
