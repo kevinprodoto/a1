@@ -2,7 +2,7 @@ import React, {Component} from "react"
 
 import App from "../../Components/App";
 
-import TaskForm from "../../Components/TaskForm/index";
+// import TaskForm from "../../Components/TaskForm/index";
 
 import {changeDate} from "../../Tools/changeDate";
 
@@ -10,20 +10,22 @@ import {firstDay} from "../../Tools/firstDay";
 
 import {lastDay} from "../../Tools/lastDay";
 
-import Request from "../../Services/Request";
+import {obj} from "../../1";
+
+// import Request from "../../Services/Request";
 
 export default class AppContainer extends Component {
 
     state = {
         label: "",
-        items: new Request(localStorage.getItem("tyu")).getAllTrades(),
-        updetedItems: new Request(localStorage.getItem("tyu")).getAllTrades(),
+        items: obj.payload.items,//new Request(localStorage.getItem("tyu")).getAllTrades(),
+        updetedItems: obj.payload.items.map(item => item),//new Request(localStorage.getItem("tyu")).getAllTrades(),
         all: true,
         sell: false,
         buy: false,
         brokCom: false,
-        dateFrom: firstDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
-        dateTo: lastDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
+        dateFrom: firstDay(obj.payload.items),//firstDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
+        dateTo: lastDay(obj.payload.items),//lastDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
     }
 
     changeAll = () => {
@@ -215,10 +217,9 @@ export default class AppContainer extends Component {
 
     render() {
         const {updetedItems, all, sell, buy, brokCom, dateTo, dateFrom} = this.state;
-        if (!localStorage.getItem("req")) {
-            console.log("HELLO FAGGOT!")
-            return <TaskForm />
-        } else {
+ //       if (!localStorage.getItem("req")) {
+ //           return <TaskForm />
+//        } else {
             return <App 
             onLabelChange = {this.onLabelChange}
             items = {updetedItems}
@@ -234,7 +235,7 @@ export default class AppContainer extends Component {
             changeTo = {this.changeTo}
             dateFrom = {dateFrom}
             dateTo = {dateTo}/>
-        }
+ //       }
 
     }
 }
