@@ -81,3 +81,12 @@ body {
 .textRed {
 	color: red;
 }
+.FORM {
+	margin: auto;
+	margin-top: 100px;
+	width: 500px;
+}
+.FORM input {
+	width: 500px;
+	line-height: 50px;
+}

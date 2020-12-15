@@ -2,7 +2,7 @@ import React, {Component} from "react"
 
 import App from "../../Components/App";
 
-import {obj} from "../../1";
+import TaskForm from "../../Components/TaskForm/index";
 
 import {changeDate} from "../../Tools/changeDate";
 
@@ -10,18 +10,20 @@ import {firstDay} from "../../Tools/firstDay";
 
 import {lastDay} from "../../Tools/lastDay";
 
+import Request from "../../Services/Request";
+
 export default class AppContainer extends Component {
 
     state = {
         label: "",
-        items: obj.payload.items,
-        updetedItems: obj.payload.items.map(item => item),
+        items: new Request(localStorage.getItem("req")).getAllTrades(),
+        updetedItems: new Request(localStorage.getItem("req")).getAllTrades(),
         all: true,
         sell: false,
         buy: false,
         brokCom: false,
-        dateFrom: firstDay(obj.payload.items),
-        dateTo: lastDay(obj.payload.items),
+        dateFrom: firstDay(new Request(localStorage.getItem("req")).getAllTrades()),
+        dateTo: lastDay(new Request(localStorage.getItem("req")).getAllTrades()),
     }
 
     changeAll = () => {
@@ -213,20 +215,26 @@ export default class AppContainer extends Component {
 
     render() {
         const {updetedItems, all, sell, buy, brokCom, dateTo, dateFrom} = this.state;
-        return <App 
-                    onLabelChange = {this.onLabelChange}
-                    items = {updetedItems}
-                    changeComission = {this.changeComission}
-                    changeBuy = {this.changeBuy}
-                    changeSell = {this.changeSell}
-                    changeAll = {this.changeAll}
-                    all = {all}
-                    sell = {sell}
-                    buy = {buy}
-                    brokCom = {brokCom}
-                    changeFrom = {this.changeFrom}
-                    changeTo = {this.changeTo}
-                    dateFrom = {dateFrom}
-                    dateTo = {dateTo}/>
+        if (!localStorage.getItem("req")) {
+            console.log("HELLO FAGGOT!")
+            return <TaskForm />
+        } else {
+            return <App 
+            onLabelChange = {this.onLabelChange}
+            items = {updetedItems}
+            changeComission = {this.changeComission}
+            changeBuy = {this.changeBuy}
+            changeSell = {this.changeSell}
+            changeAll = {this.changeAll}
+            all = {all}
+            sell = {sell}
+            buy = {buy}
+            brokCom = {brokCom}
+            changeFrom = {this.changeFrom}
+            changeTo = {this.changeTo}
+            dateFrom = {dateFrom}
+            dateTo = {dateTo}/>
+        }
+
     }
 }
