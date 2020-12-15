@@ -3,7 +3,7 @@ import React, {Component} from "react";
 class TaskForm extends Component{
 
     onSubmit = (evv) => {
-        localStorage.setItem("req", evv.target.value);
+        localStorage.setItem("tyu", evv.target.value);
     }
 
     render() {
