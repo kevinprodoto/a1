@@ -52,7 +52,6 @@ export default class NewItemList extends Component {
                 </form>
                 <ul className = "stonks">
                     {names.map(itemName => {
-                        if (itemName !== undefined) {
                             return <li className = "forTicker">
                                 <div>
                                     <p>{itemName}</p>
@@ -84,7 +83,6 @@ export default class NewItemList extends Component {
                                             />)}
                                 </ul>
                         </li>
-                        }
                     })}
                 </ul>
             </fragment>
