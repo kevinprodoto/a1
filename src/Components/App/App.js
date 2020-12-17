@@ -4,7 +4,7 @@ import AppHeader from "../AppHeader/index";
 
 import ItemsList from "../ItemsList/index";
 
-const App = ({all, onAll, itemsNamesAll, onDay, on3Day, onWeek, onMonth, onFormSubmit, dateFrom, dateTo, items, onLabelChange, day, days, week, month}) => {
+const App = ({changeTo, changeFrom, all, onAll, itemsNamesAll, onDay, on3Day, onWeek, onMonth, onFormSubmit, dateFrom, dateTo, items, onLabelChange, day, days, week, month}) => {
 
     return (
         <section className = "a1app">
@@ -23,7 +23,9 @@ const App = ({all, onAll, itemsNamesAll, onDay, on3Day, onWeek, onMonth, onFormS
                 onWeek = {onWeek}
                 onMonth = {onMonth}
                 onAll = {onAll}
-                onLabelChange = {onLabelChange}/>
+                onLabelChange = {onLabelChange}
+                changeTo= {changeTo}
+                changeFrom = {changeFrom}/>
             <ItemsList onFormSubmit = {onFormSubmit} items = {items} dateFrom = {dateFrom} dateTo = {dateTo}/>
         </section>
     )

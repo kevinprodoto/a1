@@ -4,7 +4,9 @@ import NewItem from "../newItem";
 
 import {format} from "date-fns";
 
-import {checkDate} from "../../Tools/checkDate"
+import {checkDate} from "../../Tools/checkDate";
+
+import {calcTick} from "../../Tools/calcTick";
 
 export default class NewItemList extends Component {
 
@@ -27,11 +29,15 @@ export default class NewItemList extends Component {
             this.state.itemsNames.clear();
         } else {
             this.state.itemsNames.add(this.state.label);
+            this.setState(() => {
+                return {
+                    label: "",
+                }
+            })
         }
         const {label} = this.state;
         const obj = {target: {value: label}};
         this.onChange(obj);
-        console.log(this.state.itemsNames);
     }
 
     btnSubmit = (evv) => {
@@ -43,13 +49,18 @@ export default class NewItemList extends Component {
 
     render() {
         const {items, to, from} = this.props;
-        const {itemsNames} = this.state;
+        const {itemsNames, label} = this.state;
         const names = Array.from(itemsNames);
         return (
             <fragment>
                 <form className = "searchForm" onSubmit = {this.onFormSubmit}>
-                    <input onChange = {this.onChange} className = "search" placeholder = "Поиск по тикеру..."></input>
+                    <input value = {label} onChange = {this.onChange} className = "search" placeholder = "Поиск по тикеру..."></input>
                 </form>
+                <div className = "tickerResults">
+                    <p>{`Продажи: ${(calcTick(itemsNames, items, to, from, "Sell")).toFixed(2)}`}</p>
+                    <p>{`Покупки: ${(calcTick(itemsNames, items, to, from, "Buy")).toFixed(2)}`}</p>
+                    <p>{`Комиссии: ${(calcTick(itemsNames, items, to, from, "Commission")).toFixed(2)}`}</p>
+                </div>
                 <ul className = "stonks">
                     {names.map(itemName => {
                             return <li className = "forTicker">

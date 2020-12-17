@@ -129,4 +129,7 @@ body {
 .close:hover {
 	border: 2px solid black;
 }
-
+.tickerResults {
+	width: 110px;
+	margin: auto;
+}

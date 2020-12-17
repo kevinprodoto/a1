@@ -139,6 +139,22 @@ export default class AppContainer extends Component {
         })
     }
 
+    changeFrom = (evv) => {
+        this.setState(() => {
+            return {
+                dateFrom: new Date(evv.target.value)
+            }
+        })
+    }
+
+    changeTo = (evv) => {
+        this.setState(() => {
+            return {
+                dateTo: new Date(evv.target.value)
+            }
+        })
+    }
+
     render() {
         const {updetedItems, day, days, week, month, all, dateTo, dateFrom, itemsNamesAll} = this.state;
  //       if (!localStorage.getItem("req")) {
@@ -159,7 +175,9 @@ export default class AppContainer extends Component {
             month = {month}
             all = {all}
             dateFrom = {dateFrom}
-            dateTo = {dateTo}/>
+            dateTo = {dateTo}
+            changeTo = {this.changeTo}
+            changeFrom = {this.changeFrom}/>
  //       }
 
     }
