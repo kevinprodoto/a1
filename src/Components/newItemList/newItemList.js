@@ -23,17 +23,24 @@ export default class NewItemList extends Component {
         })
     }
 
+    check = (itemss, name) => {
+        let result = false;
+        for (let item of itemss) {
+            if (item.ticker === name) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
     onFormSubmit = (evv) => {
         evv.preventDefault();
         if (this.state.label === "") {
             this.state.itemsNames.clear();
         } else {
-            this.state.itemsNames.add(this.state.label);
-            this.setState(() => {
-                return {
-                    label: "",
-                }
-            })
+            if (this.check(this.props.items, this.state.label)) {
+                this.state.itemsNames.add(this.state.label);
+            }
         }
         const {label} = this.state;
         const obj = {target: {value: label}};
