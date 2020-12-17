@@ -4,25 +4,27 @@ import AppHeader from "../AppHeader/index";
 
 import ItemsList from "../ItemsList/index";
 
-const App = ({dateFrom, dateTo, fail, items, changeBuy, changeSell, changeComission, changeAll, onLabelChange, all, sell, buy, brokCom, changeFrom, changeTo}) => {
+const App = ({all, onAll, itemsNamesAll, onDay, on3Day, onWeek, onMonth, onFormSubmit, dateFrom, dateTo, items, onLabelChange, day, days, week, month}) => {
 
     return (
         <section className = "a1app">
             <AppHeader 
+                items = {items}
+                from = {dateFrom}
+                to = {dateTo}
+                day = {day}
+                days = {days}
+                week = {week}
+                month = {month}
                 all = {all}
-                sell = {sell}
-                buy = {buy}
-                brokCom = {brokCom}
-                count = {items.length}
-                fail = {fail}
-                changeComission = {changeComission}
-                changeBuy = {changeBuy}
-                changeSell = {changeSell}
-                changeAll = {changeAll}
-                onLabelChange = {onLabelChange}
-                changeTo = {changeTo}
-                changeFrom = {changeFrom}/>
-            <ItemsList items = {items} dateFrom = {dateFrom} dateTo = {dateTo}/>
+                itemsNamesAll = {itemsNamesAll}
+                onDay = {onDay}
+                on3Day = {on3Day}
+                onWeek = {onWeek}
+                onMonth = {onMonth}
+                onAll = {onAll}
+                onLabelChange = {onLabelChange}/>
+            <ItemsList onFormSubmit = {onFormSubmit} items = {items} dateFrom = {dateFrom} dateTo = {dateTo}/>
         </section>
     )
 }

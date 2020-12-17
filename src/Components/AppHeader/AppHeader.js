@@ -1,61 +1,77 @@
-import React from "react";
+import React, {Component} from "react";
 
-const AppHeader = ({changeBuy, changeSell, changeComission, changeAll, onLabelChange, all, sell, buy, brokCom, changeTo, changeFrom}) => {
+import ResultItem from "../resultItem/index";
 
-    let classAll = "active";
-    let classSell = "";
-    let classBuy = "";
-    let classBrokCom = "";
+import {headerDate} from "../../Tools/headerDate"
 
-    if (all) {
-        classAll = "active";
-        classSell = "";
-        classBuy = "";
-        classBrokCom = "";
-    }
-    if (sell) {
-        classAll = "";
-        classSell = "active";
-        classBuy = "";
-        classBrokCom = "";
-    }
-    if (buy) {
-        classAll = "";
-        classSell = "";
-        classBuy = "active";
-        classBrokCom = "";
-    }
-    if (brokCom) {
-        classAll = "";
-        classSell = "";
-        classBuy = "";
-        classBrokCom = "active";
-    }
+export default class AppHeader extends Component {
 
-    return (
-        <header className = "appHeader">
-            <div className = "filters">
-                <button className = {classAll} type = "button" onClick = {changeAll}>Все</button>
-                <button className = {classSell} type = "button" onClick = {changeSell}>Продажи</button>
-                <button className = {classBuy} type = "button" onClick = {changeBuy}>Покупки</button>
-                <button className = {classBrokCom} type = "button" onClick = {changeComission}>Комиссии</button>
-            </div>
-            <div className = "inputs">
-                <form>
-                    <input className = "search" placeholder = "Поиск по тикеру..." onChange = {onLabelChange}></input>
-                </form>
-                <p className = "text">От</p>
-                <form>
-                    <input onChange = {changeFrom} type = "date"></input>
-                </form>
-                <p className = "text">До</p>
-                <form>
-                    <input onChange = {changeTo} type = "date"></input>
-                </form>
-            </div>
-        </header>
-    ) 
+    
+
+    render() {
+        const {all, onAll, items, to, from, itemsNamesAll, onDay, on3Day, onWeek, onMonth, day, days, week, month} = this.props;
+        let classDay = "";
+        let classDays = "";
+        let classWeek = "";
+        let classMonth = "";
+        let classAll = "";
+        if (day) {
+            classDay = "active";
+            classDays = "";
+            classWeek = "";
+            classMonth = "";
+            classAll = "";
+        }
+        if (days) {
+            classDay = "";
+            classDays = "active";
+            classWeek = "";
+            classMonth = "";
+            classAll = "";
+        }
+        if (week) {
+            classDay = "";
+            classDays = "";
+            classWeek = "active";
+            classMonth = "";
+            classAll = "";
+        }
+        if (month) {
+            classDay = "";
+            classDays = "";
+            classWeek = "";
+            classMonth = "active";
+            classAll = "";
+        }
+        if (all) {
+            classDay = "";
+            classDays = "";
+            classWeek = "";
+            classMonth = "";
+            classAll = "active";
+        }
+        return (
+            <header className = "appHeader">
+                <div className = "buttons">
+                    <button className = {classDay} type = "button" onClick = {onDay}>День</button>
+                    <button className = {classDays} type = "button" onClick = {on3Day}>3 дня</button>
+                    <button className = {classWeek} type = "button" onClick = {onWeek}>Неделя</button>
+                    <button className = {classMonth} type = "button" onClick = {onMonth}>Месяц</button>
+                    <button className = {classAll} type = "button" onClick = {onAll}>Год</button>
+                </div>
+                <ul className = "results">
+                    <li className = "results__item">
+                        <div className = "StonkName">Акция</div>
+                        <div className = "StonkProfit">Прибыль</div>
+                        <div className = "StonkComm">Комиссия</div>
+                        <div className = "StonkTax">Налог</div>
+                        <div className = "StonkPure">Чистая прибыль</div>
+                    </li>
+                    {Array.from(itemsNamesAll).filter(name => headerDate(name, items, to, from)).map(name => <ResultItem to = {to} from = {from} items = {items} name = {name}/>)}
+                </ul>
+            </header>
+        ) 
+    }
+   
     
 }
-
-export default AppHeader;

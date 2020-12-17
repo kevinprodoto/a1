@@ -6,11 +6,11 @@ import App from "../../Components/App";
 
 import {changeDate} from "../../Tools/changeDate";
 
-import {firstDay} from "../../Tools/firstDay";
+import {obj} from "../../132";
 
-import {lastDay} from "../../Tools/lastDay";
+import {changeDone} from "../../Tools/changeDone";
 
-import {obj} from "../../1";
+import {changeName} from "../../Tools/changeName";
 
 // import Request from "../../Services/Request";
 
@@ -18,114 +18,17 @@ export default class AppContainer extends Component {
 
     state = {
         label: "",
-        items: obj.payload.items,//new Request(localStorage.getItem("tyu")).getAllTrades(),
-        updetedItems: obj.payload.items.map(item => item),//new Request(localStorage.getItem("tyu")).getAllTrades(),
-        all: true,
-        sell: false,
-        buy: false,
-        brokCom: false,
-        dateFrom: firstDay(obj.payload.items),//firstDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
-        dateTo: lastDay(obj.payload.items),//lastDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
+        items: obj.payload.items.filter(item => changeDone(item)),//new Request(localStorage.getItem("tyu")).getAllTrades(),
+        updetedItems: obj.payload.items.map(item => item).filter(item => changeDone(item)),//new Request(localStorage.getItem("tyu")).getAllTrades(),
+        itemsNamesAll: new Set(obj.payload.items.map(item => item.ticker)),//changeName(obj.payload.items),
+        day: true,
+        days: false,
+        week: false,
+        month: false,
+        all: false,
+        dateFrom: new Date(new Date() - (24*3600*1000)),//firstDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
+        dateTo: new Date(),//lastDay(new Request(localStorage.getItem("tyu")).getAllTrades()),
     }
-
-    changeAll = () => {
-        if (this.state.label !== "") {
-            this.setState(() => {
-                return {                    
-                    all: true,
-                    sell: false,
-                    buy: false,
-                    brokCom: false,
-                    updetedItems: this.state.items.filter(item => this.changeLabel(item, this.state.label)).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
-                }
-            })
-        } else {
-            this.setState(() => {
-                return {
-                    updetedItems: this.state.items.map(item => item).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))),
-                    all: true,
-                    sell: false,
-                    buy: false,
-                    brokCom: false,
-                }
-            })
-        }
-    }
-
-    changeSell = () => {
-        if (this.state.label !== "") {
-            this.setState(() => {
-                return {
-                    all: false,
-                    sell: true,
-                    buy: false,
-                    brokCom: false,
-                    updetedItems: this.state.items.filter(item => {return item.operationType === "Sell"}).filter(item => this.changeLabel(item, this.state.label)).filter(item => {return changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))})
-                }
-                })
-        } else {
-            this.setState(() => {
-                return {
-                    updetedItems: this.state.items.filter((item) => item.operationType === "Sell").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))),
-                    all: false,
-                    sell: true,
-                    buy: false,
-                    brokCom: false,
-                }
-            })
-        }
-
-    }
-
-    changeBuy = () => { 
-        if (this.state.label !== "") {
-            this.setState(() => {
-                return {
-                    all: false,
-                    sell: false,
-                    buy: true,
-                    brokCom: false,
-                    updetedItems: this.state.items.filter(item => item.operationType === "Buy").filter(item => this.changeLabel(item, this.state.label)).filter(item => {return changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))})
-                }
-                })
-        } else {
-            this.setState(() => {
-                return {
-                    updetedItems: this.state.items.filter((item) => item.operationType === "Buy").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))),
-                    all: false,
-                    sell: false,
-                    buy: true,
-                    brokCom: false,
-                }
-            })
-        }
-
-    }
-
-    changeComission = () => {
-        if (this.state.label !== "") {
-            this.setState(() => {
-                return {
-                    all: false,
-                    sell: false,
-                    buy: false,
-                    brokCom: true,
-                    updetedItems: this.state.items.filter(item => item.operationType === "BrokCom").filter(item => this.changeLabel(item, this.state.label)).filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date)))
-                }
-                })
-        } else {
-            this.setState(() => {
-                return {
-                    updetedItems: this.state.items.filter((item) => item.operationType === "BrokCom").filter(item => changeDate(this.state.dateFrom, this.state.dateTo, new Date(item.date))),
-                    all: false,
-                    sell: false,
-                    buy: false,
-                    brokCom: true,
-                }
-            })
-        }
-    }
-
     onLabelChange = (evv) => {
         if (evv.target.value === "") {
             this.setState(() => {
@@ -171,42 +74,90 @@ export default class AppContainer extends Component {
         }
     }
 
-    changeFrom = (evv) => {
+    onDay = () => {
         this.setState(() => {
             return {
-                dateFrom: new Date(evv.target.value)
+                dateFrom: new Date(new Date() - (24*3600*1000)),
+                day: true,
+                days: false,
+                week: false,
+                month: false,
+                all: false,
             }
         })
-        this.changeAll()
     }
 
-    changeTo = (evv) => {
+    on3Day = () => {
         this.setState(() => {
             return {
-                dateTo: new Date(evv.target.value)
+                dateFrom: new Date(new Date() - (24*3600*1000*3)),
+                day: false,
+                days: true,
+                week: false,
+                month: false,
+                all: false,
             }
         })
-        this.changeAll()
+    }
+
+    onWeek = () => {
+        this.setState(() => {
+            return {
+                dateFrom: new Date(new Date() - (24*3600*1000*7)),
+                day: false,
+                days: false,
+                week: true,
+                month: false,
+                all: false,
+            }
+        })
+    }
+
+    onMonth = () => {
+        this.setState(() => {
+            return {
+                dateFrom: new Date(new Date() - (24*3600*1000*30)),
+                day: false,
+                days: false,
+                week: false,
+                month: true,
+                all: false,
+            }
+        })
+    }
+
+    onAll = () => {
+        this.setState(() => {
+            return {
+                dateFrom: new Date(new Date() - (24*3600*1000*365)),
+                day: false,
+                days: false,
+                week: false,
+                month: false,
+                all: true,
+            }
+        })
     }
 
     render() {
-        const {updetedItems, all, sell, buy, brokCom, dateTo, dateFrom} = this.state;
+        const {updetedItems, day, days, week, month, all, dateTo, dateFrom, itemsNamesAll} = this.state;
  //       if (!localStorage.getItem("req")) {
  //           return <TaskForm />
 //        } else {
             return <App 
+            onDay = {this.onDay}
+            on3Day = {this.on3Day}
+            onWeek = {this.onWeek}
+            onMonth = {this.onMonth}
+            onAll = {this.onAll}
+            itemsNamesAll = {itemsNamesAll}
             onLabelChange = {this.onLabelChange}
             items = {updetedItems}
-            changeComission = {this.changeComission}
-            changeBuy = {this.changeBuy}
-            changeSell = {this.changeSell}
-            changeAll = {this.changeAll}
+            day = {day}
+            days = {days}
+            week = {week}
+            month = {month}
             all = {all}
-            sell = {sell}
-            buy = {buy}
-            brokCom = {brokCom}
-            changeFrom = {this.changeFrom}
-            changeTo = {this.changeTo}
             dateFrom = {dateFrom}
             dateTo = {dateTo}/>
  //       }
